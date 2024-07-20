@@ -7,15 +7,6 @@ using UnityEngine.SceneManagement;
 public class LoadSpecificScene : MonoBehaviour
 {
     [SerializeField] SceneAsset sceneToLoad = null;
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
 
     void ChangeScene()
     {
@@ -24,6 +15,9 @@ public class LoadSpecificScene : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        ChangeScene();
+        if(collision.CompareTag("Player"))
+        {
+            ChangeScene();
+        }
     }
 }
