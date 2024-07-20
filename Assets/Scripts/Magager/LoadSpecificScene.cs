@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,6 +6,12 @@ using UnityEngine.SceneManagement;
 public class LoadSpecificScene : MonoBehaviour
 {
     [SerializeField] SceneAsset sceneToLoad = null;
+    [SerializeField] Animator fadeSystem = null;
+
+    void Awake()
+    {
+        fadeSystem = GameObject.FindGameObjectWithTag("FadeSystem").GetComponent<Animator>();
+    }
 
     void ChangeScene()
     {
@@ -17,7 +22,14 @@ public class LoadSpecificScene : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
-            ChangeScene();
+            StartCoroutine(LoadNextScene());
         }
+    }
+
+    IEnumerator LoadNextScene()
+    {
+        fadeSystem.SetTrigger("FadeIn");
+        yield return new WaitForSeconds(1);
+        ChangeScene();
     }
 }
